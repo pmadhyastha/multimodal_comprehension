@@ -1,4 +1,4 @@
-All the files are made available in the following links (ADD OSF LINK). 
+All the files are made available in the following links (https://osf.io/x7u4j/). 
 
 Main files: 
   - Audio only files: see audio data component. Contains original EEG data, ERP data, lmer data, in zip formats.
@@ -9,8 +9,5 @@ Additional files:
 
   - README
   - scripts: same as the code section in this GitHub page, see README in code section for descriptions
-  - stimuli: experimental stimuli in audio only, video and video replication studies.
-  - word_info: 
-  -   design matrix: final design matrix used for the preprocessing_variables.py
-  -   word quantifications: quantifications of surprisal and prosody per word, used to generate design matrix. 
-        
+  - stimuli: experimental stimuli in audio only, video and video replication studies. In the original study by Zhang et al., 2021, participants watched/listened to the stimuli in two conditions, one with gestures and one without. Therefore, each folder contains 2 sub folders, Gesture and No Gesture. 
+  - word_info: quantification of information per word. word_merged_audio_seq.csv and word_merged_replication_surprisal.csv were used in the final analysis. 
