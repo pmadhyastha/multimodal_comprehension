@@ -1,27 +1,16 @@
-All the files are made available in the following links. 
+All the files are made available in the following links (ADD OSF LINK). 
 
 Main files: 
-  - Videos: []
-  - Audio only files: 
-
-
-Files are in a zip folder consists of this format: 
-
-    - videos
-    - audios
-    - README 
-    
-    
-  The contents that concern this project are in -videos and audios. 
-  
-  
-  Please refer the README file for further details about the the files. 
-  
-  
+  - Audio only files: see audio data component. Contains original EEG data, ERP data, lmer data, in zip formats.
+  - Video files: see video data component. Same data structure as above.
+  - Video replication files: see video replication data component. Same data structure as above.
   
 Additional files: 
 
-    - suprisal estimates computed using `script.py` are provided in directoryX
-    
-    - design matrix is made y columns: 
+  - README
+  - scripts: same as the code section in this GitHub page, see README in code section for descriptions
+  - stimuli: experimental stimuli in audio only, video and video replication studies.
+  - word_info: 
+  -   design matrix: final design matrix used for the preprocessing_variables.py
+  -   word quantifications: quantifications of surprisal and prosody per word, used to generate design matrix. 
         
