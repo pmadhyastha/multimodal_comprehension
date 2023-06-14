@@ -20,7 +20,7 @@ The preprocessing pipeline follows a standard approach (as in Zhang et al, 2021)
 - input: *_lmer.zip/300-500.txt and baseline.txt, word_info.zip/word_merged_*.csv, word_info.zip/channel_coordinate.csv
 - output: *_lmer.zip/300-500_info.csv
 - Running preprocessing_variables.py to add baseline (baseline.txt) design matrix (word_merged_*.csv), electrode coordinates (channel_coordinate.csv) to the N400 data. 
-- Note that the design matrix is created by merging word-by-word quantifications from various sources (see word_info.zip/word_quantifications). The scripts that combines them are tailored for individual needs and lack sufficient documentation. You can find these scripts in the scripts.zip/supplementary_scripts/ directory.
+- Note that the design matrix is created by merging word-by-word quantifications from various sources (see word_info.zip/word_quantifications). The scripts that combines them are tailored for individual needs and lack sufficient documentation. You can find these scripts in the code/supplementary_scripts/ directory.
 
 
 4. Statistical Analysis
