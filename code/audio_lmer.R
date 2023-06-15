@@ -716,6 +716,8 @@ test_audiovisual_replication$p_fdr = p.adjust(test_audiovisual_replication$`Pr(>
 
 write.table(test_audiovisual_replication, paste(path, 'results/model_audiovisual_replication.txt', sep = ''))
 
+test_audiovisual_replication = read.table(paste(path, 'results/model_audiovisual_replication.txt', sep = ''))
+
 # Plotting results
 AIC_plot_video_replication_main = 
   test_audiovisual_replication %>%
@@ -725,7 +727,7 @@ AIC_plot_video_replication_main =
   scale_x_discrete(labels=c('2-gram','3-gram','4-gram', '5-gram', '6-gram', 'BERT', 'GPT-2'))+
   xlab('') +
   ylab(expression(Delta * 'AIC'))+
-  ggtitle('Audiovisual modality (replication)') +
+  ggtitle('Audiovisual modality (replication)\nmain effect model') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         legend.position='none')
@@ -738,7 +740,7 @@ AIC_plot_video_replication_inter =
   scale_x_discrete(labels=c('2-gram','3-gram','4-gram', '5-gram', '6-gram', 'BERT', 'GPT-2'))+
   xlab('') +
   ylab(expression(Delta * 'AIC'))+
-  ggtitle('Audiovisual modality (replication)') +
+  ggtitle('Audiovisual modality (replication)\ninteraction model') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         legend.position='none')
@@ -749,7 +751,65 @@ pdf(paste(path, 'results/model_replication.pdf', sep = ''),
 grid.arrange(AIC_plot_video_replication_main, AIC_plot_video_replication_inter, ncol = 2, nrow = 1) 
 dev.off() 
 
+# (Exploratory): splitting AV data by gesture
+# In the AV condition, each stimuli is recorded twice, once with gesture and once without. Run model comparison in the AV data of each type of stimuli
 
+data_video_replication_preprocessed = preprocessing(data_video_replication)
+data_video_replication_preprocessed$is_G = ifelse(grepl("G", data_video_replication_preprocessed$passage_id), 'gesture', 'no_gesture')
+
+models <- c('2gram', '3gram', '4gram', '5gram', '6gram', 'gpt2', 'bert')
+gesture_list <- c('gesture', 'no_gesture')
+test_list = list()
+i=1
+for (model in models){
+  for (gesture in gesture_list){
+    data_slice = data_video_replication_preprocessed %>%
+      filter(is_G == gesture)
+    test_slice <- surprisal_comparison(data_slice, model)
+    test_slice$model = model
+    test_slice$gesture_condition = gesture
+    test_list[[i]] <- test_slice
+    i=i+1
+  }
+}
+test_video_replication_gesture <- dplyr::bind_rows(test_list)
+test_video_replication_gesture$modality = 'audiovisual(replication)'
+test_video_replication_gesture$p_fdr = p.adjust(test_video_replication_gesture$`Pr(>Chisq)`, method = 'fdr', n = 28)
+
+write.table(test_video_replication_gesture, paste(path, 'results/model_AV_replication_gesture_conditions.txt', sep = ''))
+
+test_video_replication_gesture = read.table(paste(path, 'results/model_AV_replication_gesture_conditions.txt', sep = ''))
+
+AIC_plot_video_replication_gesture_main = 
+  test_video_replication_gesture  %>%
+  filter(interaction=='main') %>%
+  filter(modality == 'audiovisual(replication)') %>%
+  ggplot(aes(x = model, y = aic_dif, fill = model)) +
+  geom_bar(stat='identity') + 
+  facet_wrap(vars(gesture_condition), ncol = 2) +
+  xlab('') +
+  ylab(expression(Delta * 'AIC'))+
+  ggtitle('Audiovisual replication, gesture split\nmain effect model') +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position='none')
+
+AIC_plot_video_replication_gesture_inter = 
+  test_video_replication_gesture  %>%
+  filter(interaction=='interaction') %>%
+  filter(modality == 'audiovisual(replication)') %>%
+  ggplot(aes(x = model, y = aic_dif, fill = model)) +
+  geom_bar(stat='identity') + 
+  facet_wrap(vars(gesture_condition), ncol = 2) +
+  xlab('') +
+  ylab(expression(Delta * 'AIC'))+
+  ggtitle('Audiovisual replication, gesture split\ninteraction model') +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position='none')
+
+pdf(paste(path, 'results/model_video_replication_gesture_contidions.pdf', sep = ''), 
+    width = 15, height = 4,encoding='MacRoman') # Open a new pdf file
+grid.arrange(AIC_plot_video_replication_gesture_main,AIC_plot_video_replication_gesture_inter, ncol = 2, nrow = 1) 
+dev.off() 
 ################################################################
 # Scratch
 ################################################################
