@@ -6,6 +6,11 @@ We specifically focus on the N400 event-related potential (ERP) signature associ
 Our findings indicate that cognitive effort, as measured by surprisal, differs significantly between multimodal and unimodal settings. Surprisal estimates from language models reveal that transformer-based models provide a better fit for N400 signals in the audio-only setting, while 2-gram language models are more suitable in the multimodal setting. 
 This suggests that local verbal context has a significant influence on cognitive processing in a multimodal comprehension scenario.
 
+
+
+
+More details coming soon ... 
+
 ## Project Structure
 The project repository is structured as follows:
 
@@ -26,3 +31,13 @@ To reproduce the experiments or analyze the data, follow the steps below:
 4. Point to the resources as mentioned in the `README.md` file in the `data/` directory. 
 5. Follow the instructions provided in the `README.md` file in the `code/` directory to run the experiments and analyze the data.
 
+
+```
+@article{madhyastha2023words,
+  title={Are words equally surprising in audio and audio-visual comprehension?},
+  author={Madhyastha, Pranava and Zhang, Ye and Vigliocco, Gabriella},
+  journal={Proceedings of the Annual Meeting of the Cognitive Science Society},
+  volume={45},
+  year={2023}
+}
+```
